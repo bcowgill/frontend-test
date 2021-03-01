@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { fetchSuggestions } from "./utils/api";
-
 import "./Autocomplete.css";
 
 function Autocomplete() {
@@ -9,9 +7,12 @@ function Autocomplete() {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    fetchSuggestions(searchTerm).then((_suggestions) =>
-      setSuggestions(_suggestions)
-    );
+    if (searchTerm.trim().length)
+    {
+      fetchSuggestions(searchTerm).then((_suggestions) =>
+        setSuggestions(_suggestions)
+      );
+    }
   }, [searchTerm]);
 
   return (
