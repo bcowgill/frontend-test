@@ -37,7 +37,7 @@ Some stretch goals you might want to consider are:
 
 1. Display loading states when the product detail and search suggestions are being fetched.
 2. Make sure the application is fully keyboard-accessible.
-3. The application currently doesn't account for errors when fetching (response failures, request timeouts etc.), how could this be handled within the application?
+DONE 3. The application currently doesn't account for errors when fetching (response failures, request timeouts etc.), how could this be handled within the application?
 
 ## Your Solution
 
