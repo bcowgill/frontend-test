@@ -1,5 +1,5 @@
 import React from "react";
-import {render, screen} from '@testing-library/react'
+import { render, screen } from "@testing-library/react";
 
 import Autocomplete from "./Autocomplete";
 
@@ -10,9 +10,11 @@ describe("Autocomplete", () => {
     render(<Autocomplete />);
     // screen.debug();
 
-    const input = screen.getByRole('textbox', {placeholder: /search for a product/i})
+    const input = screen.getByRole("textbox", {
+      placeholder: /search for a product/i,
+    });
 
     expect(input).toBeInTheDocument();
-    screen.getByPlaceholderText('Search for a product')
+    screen.getByPlaceholderText("Search for a product");
   });
 });

@@ -7,8 +7,7 @@ function Autocomplete() {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (searchTerm.trim().length)
-    {
+    if (searchTerm.trim().length) {
       fetchSuggestions(searchTerm).then((_suggestions) =>
         setSuggestions(_suggestions)
       );
