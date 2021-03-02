@@ -1,0 +1,2 @@
+# emacs lock files should be ignored by prettier
+.#*.js

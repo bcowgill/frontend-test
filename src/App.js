@@ -1,15 +1,22 @@
-import React from "react";
-
+import React, { useState, useCallback } from "react";
+import ProductDetail from "./ProductDetail";
+import Autocomplete from "./Autocomplete";
 import "./App.css";
 
-import Autocomplete from "./Autocomplete";
-import ProductDetail from "./ProductDetail";
-
 function App() {
+  const [productId, setProductId] = useState();
+
+  const onClickProduct = useCallback(
+    (id) => {
+      setProductId(id);
+    },
+    [setProductId]
+  );
+
   return (
     <div className="App">
-      <Autocomplete />
-      <ProductDetail productId={null} />
+      <Autocomplete onClickProduct={onClickProduct} />
+      <ProductDetail productId={productId} />
     </div>
   );
 }

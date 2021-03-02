@@ -22,8 +22,8 @@ The project is currently unfinished, requiring some new feature development and 
 DONE 1. When a user has typed a search query, the search suggestions should be shown in a list below the text input.
 DONE 2. Only show the top 10 suggestions at a time. If more suggestions have been returned by the API, you may assume that only the first 10 should be shown.
 DONE 3. If the user has not entered a search query, we should not fetch or display any search suggestions.
-4. When the user selects a suggestion, the product detail should be fetched and displayed in a card style matching the designs.
-5. When the user selects a suggestion, the search suggestions should be removed and the text input should be cleared.
+CODED 4. When the user selects a suggestion, the product detail should be fetched and displayed in a card style matching the designs.
+DONE 5. When the user selects a suggestion, the search suggestions should be removed and the text input should be cleared.
 6. The application is not responsive and does not match the designs. Please look at the `/designs` directory and alter the application to be as close to the intended designs as possible. Please note that there are designs for desktop and mobile so your solution should be fully responsive and you should assume `600px` to be the breakpoint between desktop and mobile.
 7. Currently, a request for suggestions is fired on every keystroke, this should be made more efficient by debouncing the network request.
 

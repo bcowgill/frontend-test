@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchSuggestions } from "./utils/api";
 import "./Autocomplete.css";
 
@@ -6,11 +7,25 @@ let renders = 0;
 
 const displayName = "Autocomplete";
 
-const Suggest = React.memo(({ title }) => {
-  return <div data-testid={`${displayName}-suggestion`}>{title}</div>;
+const Suggest = React.memo(({ id, title, onClick }) => {
+  return (
+    <div
+      data-testid={`${displayName}-suggestion`}
+      data-id={id}
+      onClick={onClick}
+    >
+      {title}
+    </div>
+  );
 });
+Suggest.displayName = "Suggest";
+Suggest.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
 
-function Autocomplete() {
+function Autocomplete({ onClickProduct }) {
   const [searchError, setSearchError] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -37,11 +52,27 @@ function Autocomplete() {
     }
   }, [searchTerm]);
 
+  const onClickSuggestion = useCallback(
+    (event) => {
+      const id = event && event.target && event.target.getAttribute("data-id");
+      setSearchTerm("");
+      setSuggestions([]);
+      id && onClickProduct && onClickProduct(id);
+    },
+    [onClickProduct]
+  );
+
   function renderSuggestions() {
     return (
       <div data-testid={`${displayName}-suggestion-list`}>
         {suggestions.map((suggestion) => {
-          return <Suggest key={suggestion.id} {...suggestion} />;
+          return (
+            <Suggest
+              key={suggestion.id}
+              {...suggestion}
+              onClick={onClickSuggestion}
+            />
+          );
         })}
       </div>
     );
@@ -76,5 +107,8 @@ function Autocomplete() {
     </div>
   );
 }
+Autocomplete.propTypes = {
+  onClickProduct: PropTypes.func,
+};
 
 export default Autocomplete;

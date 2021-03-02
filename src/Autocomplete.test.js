@@ -8,8 +8,11 @@ const displayName = "Autocomplete";
 jest.mock("./utils/api");
 
 describe(displayName, () => {
+  let clickSpy;
+
   function renderForTest() {
-    const tools = render(<Autocomplete />);
+    clickSpy = jest.fn();
+    const tools = render(<Autocomplete onClickProduct={clickSpy} />);
 
     const input = screen.getByRole("textbox", {
       placeholder: /search for a product/i,
@@ -26,12 +29,13 @@ describe(displayName, () => {
   it("handles a server error gracefully", async () => {
     const { input } = renderForTest();
 
+    userEvent.clear(input);
     userEvent.paste(input, "error");
     let error;
     await waitFor(() => {
       error = screen.getByTestId(`${displayName}-error`);
     });
-    // screen.debug();
+
     expect(error).toHaveTextContent(
       "error trying to search, please try later."
     );
@@ -40,6 +44,7 @@ describe(displayName, () => {
   it("renders correctly with a popular search term", async () => {
     const { input } = renderForTest();
 
+    userEvent.clear(input);
     userEvent.paste(input, "test");
     let suggestions;
     await waitFor(() => {
@@ -48,9 +53,40 @@ describe(displayName, () => {
         throw new Error("awaiting suggestion list");
       }
     });
-    // screen.debug();
 
     expect(suggestions).toHaveLength(10);
     screen.getByText("SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s");
+  });
+
+  it("clears the search when a suggestion is clicked", async () => {
+    const { input } = renderForTest();
+
+    userEvent.clear(input);
+    userEvent.paste(input, "test");
+    let suggestions;
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (!suggestions.length) {
+        throw new Error("awaiting suggestion list");
+      }
+    });
+
+    expect(suggestions).toHaveLength(10);
+    const select = screen.getByText(
+      "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s"
+    );
+
+    userEvent.click(select);
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (suggestions.length) {
+        throw new Error("awaiting suggestion list to vanish");
+      }
+    });
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledWith("10");
+
+    expect(input.value).toBe("");
   });
 });
