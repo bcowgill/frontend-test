@@ -28,6 +28,8 @@ function Autocomplete() {
             message: "error trying to search, please try later.",
           });
         });
+    } else {
+      setSuggestions([]);
     }
   }, [searchTerm]);
 
