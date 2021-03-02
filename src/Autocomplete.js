@@ -25,36 +25,64 @@ Suggest.propTypes = {
   onClick: PropTypes.func,
 };
 
+const THROTTLE = 300;
+
+// TODO better to use a non-state variable useRef for this if more than one in the app...
+let lastLookup = null;
+function cancelApi() {
+  if (lastLookup) {
+    clearTimeout(lastLookup);
+    lastLookup = null;
+  }
+}
+
 function Autocomplete({ onClickProduct }) {
   const [searchError, setSearchError] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  useEffect(() => {
-    setSearchError({});
-    if (searchTerm.trim().length) {
-      fetchSuggestions(searchTerm)
-        .then((suggestions) => {
-          // throw new Error("simulate an error");
-          if (suggestions.length > 10) {
-            suggestions.length = 10;
-          }
-          setSuggestions(suggestions);
-        })
-        .catch((error) => {
-          setSearchError({
-            error,
-            message: "error trying to search, please try later.",
+  const lookup = useCallback(
+    (term) => {
+      cancelApi();
+      lastLookup = setTimeout(() => {
+        lastLookup = null;
+        fetchSuggestions(term)
+          .then((suggestions) => {
+            // throw new Error("simulate an error");
+            if (suggestions.length > 10) {
+              suggestions.length = 10;
+            }
+            setSuggestions(suggestions);
+          })
+          .catch((error) => {
+            setSearchError({
+              error,
+              term,
+              message: "error trying to search, please try later.",
+            });
           });
-        });
+      }, THROTTLE);
+    },
+    [setSuggestions, setSearchError]
+  );
+
+  useEffect(() => {
+    const term = searchTerm.trim();
+    if (searchError.message) {
+      setSearchError({});
+    }
+    if (term.length) {
+      lookup(term);
     } else {
+      cancelApi();
       setSuggestions([]);
     }
-  }, [searchTerm]);
+  }, [searchTerm, searchError, setSearchError, setSuggestions, lookup]);
 
   const onClickSuggestion = useCallback(
     (event) => {
       const id = event && event.target && event.target.getAttribute("data-id");
+      cancelApi();
       setSearchTerm("");
       setSuggestions([]);
       id && onClickProduct && onClickProduct(id);
