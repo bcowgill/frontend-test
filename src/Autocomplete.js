@@ -6,6 +6,10 @@ let renders = 0;
 
 const displayName = "Autocomplete";
 
+const Suggest = React.memo(({ title }) => {
+  return <div data-testid={`${displayName}-suggestion`}>{title}</div>;
+});
+
 function Autocomplete() {
   const [searchError, setSearchError] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,6 +37,16 @@ function Autocomplete() {
     }
   }, [searchTerm]);
 
+  function renderSuggestions() {
+    return (
+      <div data-testid={`${displayName}-suggestion-list`}>
+        {suggestions.map((suggestion) => {
+          return <Suggest key={suggestion.id} {...suggestion} />;
+        })}
+      </div>
+    );
+  }
+
   // console.warn(`${displayName}.render`, renders);
   ++renders;
   return (
@@ -58,7 +72,7 @@ function Autocomplete() {
           {searchError.message}
         </div>
       )}
-      {/* TODO: render search suggestions */}
+      {suggestions && renderSuggestions()}
     </div>
   );
 }

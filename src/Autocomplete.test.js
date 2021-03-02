@@ -37,11 +37,20 @@ describe(displayName, () => {
     );
   });
 
-  it.skip("renders correctly with a popular search term", () => {
+  it("renders correctly with a popular search term", async () => {
     const { input } = renderForTest();
 
     userEvent.paste(input, "test");
-    expect(input).toBeInTheDocument();
+    let suggestions;
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (!suggestions.length) {
+        throw new Error("awaiting suggestion list");
+      }
+    });
     // screen.debug();
+
+    expect(suggestions).toHaveLength(10);
+    screen.getByText("SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s");
   });
 });
