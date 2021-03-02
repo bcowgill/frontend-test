@@ -41,6 +41,18 @@ describe(displayName, () => {
     screen.getByTestId(`${displayName}-image`);
     screen.getByText("TEST2 Product Title");
     screen.getByText("TEST2 Product Description");
-    screen.getByText("£12.45");
+    screen.getByText("£12.40");
+  });
+
+  it("renders currency formatted £x,xxx.00", async () => {
+    render(<ProductDetail productId="test3" />);
+
+    await waitFor(() => {
+      screen.getByTestId(`${displayName}-price`);
+    });
+
+    screen.getByTestId(`${displayName}-image`);
+    screen.getByText("TEST3 Product Title");
+    screen.getByText("£1,234,332.00");
   });
 });

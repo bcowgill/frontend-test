@@ -14,7 +14,12 @@ const mockData = {
     image: "data:IMAGE",
     title: "TEST2 Product Title",
     description: "TEST2 Product Description",
-    price: "12.45",
+    price: "12.4",
+  },
+  test3: {
+    id: "test3",
+    title: "TEST3 Product Title",
+    price: "1234332",
   },
 };
 // Populate mock ProductDetail data from db.json

@@ -4,12 +4,51 @@ import "./ProductDetail.css";
 
 const displayName = "ProductDetail";
 
+// toLocaleString works in browser, but not under jest...
+function formatMoney(
+  amount,
+  decimalCount = 2,
+  decimal = ".",
+  thousands = ",",
+  unit = "£"
+) {
+  try {
+    decimalCount = Math.abs(decimalCount);
+    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+    const negativeSign = amount < 0 ? "-" : "";
+
+    let i = parseInt(
+      (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+    ).toString();
+    let j = i.length > 3 ? i.length % 3 : 0;
+
+    return (
+      unit +
+      negativeSign +
+      (j ? i.substr(0, j) + thousands : "") +
+      i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+      (decimalCount
+        ? decimal +
+          Math.abs(amount - i)
+            .toFixed(decimalCount)
+            .slice(2)
+        : "")
+    );
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function ProductDetail({ productId }) {
   const [errorInfo, setError] = useState({});
   const [productInfo, setProductInfo] = useState(null);
 
   useEffect(() => {
-    if (!productId) return;
+    if (!productId) {
+      setProductInfo(null);
+      return;
+    }
 
     fetchProductDetail(productId)
       .then((productInfo) => setProductInfo(productInfo))
@@ -33,6 +72,9 @@ function ProductDetail({ productId }) {
         </div>
       );
     }
+
+    const price =
+      productInfo && productInfo.price ? formatMoney(productInfo.price) : "";
     return (
       <div data-testid={displayName} className="detail-container">
         {productInfo && productInfo.id && (
@@ -45,17 +87,45 @@ function ProductDetail({ productId }) {
               />
             </div>
             <div data-testid={`${displayName}-title`} className="row">
-              <div className="row-title">Name:</div>
-              <div className="row-body">{productInfo.title}</div>
+              <div
+                id={`${displayName}-title-${productInfo.id}`}
+                className="row-title hidden"
+              >
+                Name:
+              </div>
+              <div
+                aria-labelledby={`${displayName}-title-${productInfo.id}`}
+                className="row-body"
+              >
+                {productInfo.title}
+              </div>
             </div>
             <div data-testid={`${displayName}-description`} className="row">
-              <div className="row-title">Description:</div>
-              <div className="row-body">{productInfo.description}</div>
+              <div
+                id={`${displayName}-description-${productInfo.id}`}
+                className="row-title hidden"
+              >
+                Description:
+              </div>
+              <div
+                aria-labelledby={`${displayName}-description-${productInfo.id}`}
+                className="row-body subtle ellipsis"
+              >
+                {productInfo.description}
+              </div>
             </div>
             <div data-testid={`${displayName}-price`} className="row">
-              <div className="row-title">Price:</div>
-              <div className="row-body">
-                {productInfo.price ? `£${productInfo.price}` : ""}
+              <div
+                id={`${displayName}-price-${productInfo.id}`}
+                className="row-title hidden"
+              >
+                Price:
+              </div>
+              <div
+                aria-labelledby={`${displayName}-price-${productInfo.id}`}
+                className="row-body"
+              >
+                {price}
               </div>
             </div>
           </>
