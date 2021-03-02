@@ -19,10 +19,33 @@
     "start": "react-scripts start",
     "prettier": "prettier --write src/",
     "test": "react-scripts test",
+    "coverage": "CI=true react-scripts test --coverage",
+    "postcoverage": "cp ../perljs/scripts/coverage/*.css coverage/",
+    "coverage-view": "chromium-browser coverage/index.html",
     "server": "json-server --watch db.json -p 3001"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/App.js",
+      "!src/utils/api.js",
+      "!src/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 87,
+        "functions": 75,
+        "lines": 81,
+        "statements": 81
+      }
+    },
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
   },
   "browserslist": {
     "production": [
