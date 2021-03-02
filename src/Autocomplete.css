@@ -13,3 +13,21 @@
 .search-box:focus {
   outline: 1px solid #16a2ff;
 }
+
+.seach-suggestion-list {
+  background: #fff;
+}
+
+.search-suggestion {
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border: 2px solid #e4e4e4;
+  border-top: none;
+  background: #fff;
+}
+
+.search-suggestion:focus,
+.search-suggestion:hover {
+  background: #ccc;
+}

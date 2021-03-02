@@ -9,13 +9,14 @@ const displayName = "Autocomplete";
 
 const Suggest = React.memo(({ id, title, onClick }) => {
   return (
-    <div
+    <button
       data-testid={`${displayName}-suggestion`}
       data-id={id}
+      className="search-suggestion"
       onClick={onClick}
     >
       {title}
-    </div>
+    </button>
   );
 });
 Suggest.displayName = "Suggest";
@@ -92,7 +93,10 @@ function Autocomplete({ onClickProduct }) {
 
   function renderSuggestions() {
     return (
-      <div data-testid={`${displayName}-suggestion-list`}>
+      <div
+        className="search-suggestion-list"
+        data-testid={`${displayName}-suggestion-list`}
+      >
         {suggestions.map((suggestion) => {
           return (
             <Suggest
