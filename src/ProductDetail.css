@@ -1,9 +1,20 @@
+/* Mobile by default */
 .detail-container {
-  width: 30rem;
-  margin-left: 32px;
+  order: 1;
+  width: 22rem;
+  margin: auto;
   padding: 0 16px;
   background: #ffffff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+  .detail-container {
+    order: 10;
+    width: 30rem;
+    margin-left: 32px;
+  }
 }
 
 .row {
@@ -17,6 +28,25 @@
   font-weight: bold;
 }
 
+.row-body {
+  font-weight: bold;
+}
+
 .product-image {
   max-width: 100%;
+}
+
+.subtle {
+  font-weight: 200;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
 }

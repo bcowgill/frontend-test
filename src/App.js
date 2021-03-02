@@ -13,8 +13,10 @@ function App() {
     [setProductId]
   );
 
+  const details = productId ? "showing-details" : "";
+
   return (
-    <div className="App">
+    <div className={`App ${details}`.trim()}>
       <Autocomplete onClickProduct={onClickProduct} />
       <ProductDetail productId={productId} />
     </div>
