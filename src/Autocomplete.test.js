@@ -89,4 +89,51 @@ describe(displayName, () => {
 
     expect(input.value).toBe("");
   });
+
+  it("clears the product detail when a new search is typed", async () => {
+    const { input } = renderForTest();
+
+    expect(clickSpy).toHaveBeenCalledTimes(0);
+
+    userEvent.clear(input);
+    userEvent.paste(input, "test");
+    let suggestions;
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (!suggestions.length) {
+        throw new Error("awaiting suggestion list");
+      }
+    });
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledWith(null);
+
+    expect(suggestions).toHaveLength(10);
+    const select = screen.getByText(
+      "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s"
+    );
+
+    userEvent.click(select);
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (suggestions.length) {
+        throw new Error("awaiting suggestion list to vanish");
+      }
+    });
+
+    expect(clickSpy).toHaveBeenCalledTimes(2);
+    expect(clickSpy.mock.calls[1]).toEqual(["10"]);
+
+    userEvent.clear(input);
+    userEvent.paste(input, "test");
+    await waitFor(() => {
+      suggestions = screen.queryAllByTestId(`${displayName}-suggestion`);
+      if (!suggestions.length) {
+        throw new Error("awaiting suggestion list again");
+      }
+    });
+
+    expect(clickSpy).toHaveBeenCalledTimes(3);
+    expect(clickSpy.mock.calls[2][0]).toBe(null);
+  });
 });

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { fetchSuggestions } from "./utils/api";
 import "./Autocomplete.css";
 
-let renders = 0;
+// let renders = 0;
 
 const displayName = "Autocomplete";
 
@@ -29,6 +29,7 @@ Suggest.propTypes = {
 const THROTTLE = 300;
 
 // TODO better to use a non-state variable useRef for this if more than one in the app...
+let productId = null;
 let lastLookup = null;
 function cancelApi() {
   if (lastLookup) {
@@ -73,12 +74,23 @@ function Autocomplete({ onClickProduct }) {
       setSearchError({});
     }
     if (term.length) {
+      if (productId) {
+        productId = null;
+        onClickProduct && onClickProduct(null);
+      }
       lookup(term);
     } else {
       cancelApi();
       setSuggestions([]);
     }
-  }, [searchTerm, searchError, setSearchError, setSuggestions, lookup]);
+  }, [
+    searchTerm,
+    searchError,
+    setSearchError,
+    setSuggestions,
+    lookup,
+    onClickProduct,
+  ]);
 
   const onClickSuggestion = useCallback(
     (event) => {
@@ -86,6 +98,7 @@ function Autocomplete({ onClickProduct }) {
       cancelApi();
       setSearchTerm("");
       setSuggestions([]);
+      productId = id;
       id && onClickProduct && onClickProduct(id);
     },
     [onClickProduct]
@@ -110,15 +123,16 @@ function Autocomplete({ onClickProduct }) {
     );
   }
 
-  // console.warn(`${displayName}.render`, renders);
-  ++renders;
+  //console.warn(`${displayName}.render`, renders, productId);
+  const details = productId ? "showing-details" : "";
+  // ++renders;
   return (
-    <div className="search-container">
-      <input
+    <div className={`search-container ${details}`.trim()}>
+      {/*<input
         data-testid={`${displayName}-renders`}
         type="hidden"
         value={renders}
-      />
+      />*/}
       <input
         type="text"
         value={searchTerm}
