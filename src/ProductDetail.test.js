@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/jsx-filename-extension, react/jsx-no-literals */
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import ProductDetail from "./ProductDetail";

@@ -68,14 +68,16 @@
     "react/jsx-first-prop-new-line": "error",
     "react/jsx-fragments": "error",
     "react/jsx-handler-names": "error",
-    "react/jsx-indent": "error",
-    "react/jsx-indent-props": "error",
+    "react/jsx-indent": [
+      "error",
+      2,
+      { "checkAttributes": true, "indentLogicalExpressions": true }
+    ],
+    "react/jsx-indent-props": ["error", 2],
     "react/jsx-max-depth": "error",
     "react/jsx-max-props-per-line": "error",
-    "react/jsx-newline": "error",
     "react/jsx-no-bind": "error",
     "react/jsx-no-constructed-context-values": "error",
-    "react/jsx-no-literals": "error",
     "react/jsx-no-script-url": "error",
     "react/jsx-no-useless-fragment": "error",
     "react/jsx-one-expression-per-line": "error",
@@ -86,7 +88,17 @@
     "react/jsx-sort-props": "error",
     "react/jsx-space-before-closing": "error",
     "react/jsx-tag-spacing": "error",
-    "react/jsx-wrap-multilines": "error"
+    "react/jsx-wrap-multilines": "error",
+    "react/jsx-no-literals": [
+      "error",
+      {
+        "noStrings": true,
+        "noAttributeStrings": true,
+        "ignoreProps": true,
+        "allowedStrings": ["Ok", "Cancel", "Confirm"]
+      }
+    ],
+    "react/jsx-newline": 0
   },
   "settings": {
     "react": {
