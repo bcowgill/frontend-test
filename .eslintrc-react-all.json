@@ -35,7 +35,6 @@
     "react/no-danger": "error",
     "react/no-did-mount-set-state": "error",
     "react/no-did-update-set-state": "error",
-    "react/no-multi-comp": "error",
     "react/no-redundant-should-component-update": "error",
     "react/no-set-state": "error",
     "react/no-this-in-sfc": "error",
@@ -47,11 +46,9 @@
     "react/prefer-es6-class": "error",
     "react/prefer-read-only-props": "error",
     "react/prefer-stateless-function": "error",
-    "react/require-default-props": "error",
     "react/require-optimization": "error",
     "react/self-closing-comp": "error",
     "react/sort-comp": "error",
-    "react/sort-prop-types": "error",
     "react/state-in-constructor": "error",
     "react/static-property-placement": "error",
     "react/style-prop-object": "error",
@@ -75,8 +72,6 @@
     ],
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-max-depth": "error",
-    "react/jsx-max-props-per-line": "error",
-    "react/jsx-no-bind": "error",
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-no-script-url": "error",
     "react/jsx-no-useless-fragment": "error",
@@ -85,10 +80,32 @@
     "react/jsx-props-no-multi-spaces": "error",
     "react/jsx-props-no-spreading": "error",
     "react/jsx-sort-default-props": "error",
-    "react/jsx-sort-props": "error",
     "react/jsx-space-before-closing": "error",
     "react/jsx-tag-spacing": "error",
     "react/jsx-wrap-multilines": "error",
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "ignoreDOMComponents": false,
+        "ignoreRefs": false,
+        "allowArrowFunctions": false,
+        "allowFunctions": false,
+        "allowBind": false
+      }
+    ],
+    "react/no-multi-comp": [
+      "error",
+      {
+        "ignoreStateless": true
+      }
+    ],
+    "react/jsx-max-props-per-line": [
+      "error",
+      {
+        "maximum": 2,
+        "when": "always"
+      }
+    ],
     "react/jsx-no-literals": [
       "error",
       {
@@ -96,6 +113,34 @@
         "noAttributeStrings": true,
         "ignoreProps": true,
         "allowedStrings": ["Ok", "Cancel", "Confirm"]
+      }
+    ],
+    "react/sort-prop-types": [
+      "error",
+      {
+        "noSortAlphabetically": false,
+        "ignoreCase": true,
+        "sortShapeProp": true,
+        "requiredFirst": true,
+        "callbacksLast": true
+      }
+    ],
+    "react/require-default-props": [
+      "error",
+      {
+        "forbidDefaultForRequired": true,
+        "ignoreFunctionalComponents": false
+      }
+    ],
+    "react/jsx-sort-props": [
+      "off",
+      {
+        "noSortAlphabetically": false,
+        "ignoreCase": true,
+        "reservedFirst": true,
+        "shorthandFirst": true,
+        "shorthandLast": false,
+        "callbacksLast": true
       }
     ],
     "react/jsx-newline": 0

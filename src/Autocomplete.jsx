@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import React, {
   useRef,
   useState,
@@ -21,6 +22,7 @@ const Suggest = React.memo(({ id, title, onClick }) => {
       data-testid={`${displayName}-suggestion`}
       data-id={id}
       className="search-suggestion"
+      type="button"
       onClick={onClick}
     >
       {title}
@@ -32,6 +34,9 @@ Suggest.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+};
+Suggest.defaultProps = {
+  onClick: noop
 };
 
 const THROTTLE = 300;
@@ -51,6 +56,10 @@ function Autocomplete({ onClickProduct }) {
       delete mounted[ident]
     }
   })
+
+  const handleChange = useCallback((event) => {
+    setSearchTerm(event.target.value);
+  }, [setSearchTerm]);
 
   const cancelApi = useCallback(() => {
     if (lastLookupRef.current) {
@@ -126,8 +135,7 @@ function Autocomplete({ onClickProduct }) {
       setProductId(id);
       id && onClickProduct && onClickProduct(id);
     },
-    [onClickProduct, cancelApi
-    ]
+    [onClickProduct, cancelApi]
   );
 
   function renderSuggestions() {
@@ -141,7 +149,8 @@ function Autocomplete({ onClickProduct }) {
           return (
             <Suggest
               key={suggestion.id}
-              {...suggestion}
+              id={suggestion.id}
+              title={suggestion.title}
               onClick={onClickSuggestion}
             />
           );
@@ -166,7 +175,7 @@ function Autocomplete({ onClickProduct }) {
         value={searchTerm}
         className="search-box"
         placeholder="Search for a product"
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleChange}
       />
       {searchError.message && (
         <div
@@ -183,6 +192,9 @@ function Autocomplete({ onClickProduct }) {
 }
 Autocomplete.propTypes = {
   onClickProduct: PropTypes.func,
+};
+Autocomplete.defaultProps = {
+  onClickProduct: noop
 };
 
 export default Autocomplete;
