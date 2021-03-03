@@ -4,9 +4,13 @@ import { fetchProductDetail } from "./utils/api";
 import "./ProductDetail.css";
 
 const displayName = "ProductDetail";
+const BLOCKED = false;
 
 /* wipro site blocking... make a random image */
 const image = memoize((image) => {
+  if (!BLOCKED) {
+    return image
+  }
   if (!image) {
     return null;
   }
@@ -78,9 +82,9 @@ function ProductDetail({ productId }) {
     if (errorInfo && errorInfo.message) {
       return (
         <div
-          data-testid={`${displayName}-error`}
-          data-internal-error={errorInfo.error}
           className="detail-error"
+          data-internal-error={errorInfo.error}
+          data-testid={`${displayName}-error`}
         >
           {errorInfo.message}
         </div>
@@ -94,27 +98,27 @@ function ProductDetail({ productId }) {
       `At ${price} the ${productInfo.title} is practically a steal, after all, it features: ${productInfo.description}`;
     return (
       <div
-        title={titleTooltip}
-        data-testid={displayName}
         className="detail-container"
+        data-testid={displayName}
+        title={titleTooltip}
       >
         {productInfo && productInfo.id && (
           <>
-            <div data-testid={`${displayName}-image`} className="row">
+            <div className="row" data-testid={`${displayName}-image`}>
               <img
                 alt={productInfo.title}
-                src={image(productInfo.image)}
                 className="product-image"
+                src={image(productInfo.image)}
               />
             </div>
             <div
-              title={productInfo.title}
-              data-testid={`${displayName}-title`}
               className="row"
+              data-testid={`${displayName}-title`}
+              title={productInfo.title}
             >
               <div
-                id={`${displayName}-title-${productInfo.id}`}
                 className="row-title hidden"
+                id={`${displayName}-title-${productInfo.id}`}
               >
                 Name:
               </div>
@@ -131,8 +135,8 @@ function ProductDetail({ productId }) {
               className="row"
             >
               <div
-                id={`${displayName}-description-${productInfo.id}`}
                 className="row-title hidden"
+                id={`${displayName}-description-${productInfo.id}`}
               >
                 Description:
               </div>
@@ -144,13 +148,13 @@ function ProductDetail({ productId }) {
               </div>
             </div>
             <div
-              title={`Yours for the low, low price of ${price} order now, we have operators standing by!`}
-              data-testid={`${displayName}-price`}
               className="row"
+              data-testid={`${displayName}-price`}
+              title={`Yours for the low, low price of ${price} order now, we have operators standing by!`}
             >
               <div
-                id={`${displayName}-price-${productInfo.id}`}
                 className="row-title hidden"
+                id={`${displayName}-price-${productInfo.id}`}
               >
                 Price:
               </div>

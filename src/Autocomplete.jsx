@@ -19,9 +19,9 @@ const mounted = {};
 const Suggest = React.memo(({ id, title, onClick }) => {
   return (
     <button
-      data-testid={`${displayName}-suggestion`}
-      data-id={id}
       className="search-suggestion"
+      data-id={id}
+      data-testid={`${displayName}-suggestion`}
       type="button"
       onClick={onClick}
     >
@@ -170,18 +170,18 @@ function Autocomplete({ onClickProduct }) {
         value={renders}
       />*/}
       <input
-        type="text"
-        title="Don’t hesitate, search now!"
-        value={searchTerm}
         className="search-box"
         placeholder="Search for a product"
+        title="Don’t hesitate, search now!"
+        type="text"
+        value={searchTerm}
         onChange={handleChange}
       />
       {searchError.message && (
         <div
-          data-testid={`${displayName}-error`}
-          data-internal-error={searchError.error}
           className="search-error"
+          data-internal-error={searchError.error}
+          data-testid={`${displayName}-error`}
         >
           {searchError.message}
         </div>

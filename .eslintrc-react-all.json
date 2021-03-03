@@ -80,9 +80,16 @@
     "react/jsx-props-no-multi-spaces": "error",
     "react/jsx-props-no-spreading": "error",
     "react/jsx-sort-default-props": "error",
-    "react/jsx-space-before-closing": "error",
-    "react/jsx-tag-spacing": "error",
     "react/jsx-wrap-multilines": "error",
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "closingSlash": "never",
+        "beforeSelfClosing": "always",
+        "afterOpening": "never",
+        "beforeClosing": "allow"
+      }
+    ],
     "react/jsx-no-bind": [
       "error",
       {
@@ -133,7 +140,7 @@
       }
     ],
     "react/jsx-sort-props": [
-      "off",
+      "error",
       {
         "noSortAlphabetically": false,
         "ignoreCase": true,
