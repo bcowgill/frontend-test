@@ -22,9 +22,9 @@
   "scripts": {
     "start": "react-scripts start",
     "prettier": "prettier --write src/",
-    "lint": "eslint --cache src/",
-    "lint:strict": "eslint --cache --config .eslintrc-react-all.json src/",
-    "lint:fix": "eslint --cache --fix src/",
+    "lint": "eslint --cache --ext js,jsx src/",
+    "lint:strict": "eslint --cache --ext js,jsx --config .eslintrc-react-all.json src/",
+    "lint:fix": "eslint --cache --ext js,jsx --fix src/",
     "test": "react-scripts test",
     "coverage": "CI=true react-scripts test --coverage",
     "postcoverage": "cp ../perljs/scripts/coverage/*.css coverage/",
