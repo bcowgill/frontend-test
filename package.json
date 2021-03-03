@@ -1,69 +1,69 @@
 {
-  "name": "lloyds-web-interview",
-  "version": "0.1.0",
-  "private": true,
-  "engines": {
-    "node": ">=12.19.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.8.0",
-    "eslint": "^7.21.0",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "json-server": "^0.16.2",
-    "prettier": "^2.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "4.0.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "prettier": "prettier --write src/",
-    "lint": "eslint --cache --ext js,jsx src/",
-    "lint:strict": "eslint --cache --ext js,jsx --config .eslintrc-react-all.json src/",
-    "lint:fix": "eslint --cache --ext js,jsx --fix src/",
-    "test": "react-scripts test",
-    "coverage": "CI=true react-scripts test --coverage",
-    "postcoverage": "cp ../perljs/scripts/coverage/*.css coverage/",
-    "coverage-view": "chromium-browser coverage/index.html",
-    "server": "json-server --watch db.json -p 3001"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/App.js",
-      "!src/utils/api.js",
-      "!src/index.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 87,
-        "functions": 75,
-        "lines": 81,
-        "statements": 81
-      }
-    },
-    "coverageReporters": [
-      "html",
-      "text"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "lloyds-web-interview",
+	"version": "0.1.0",
+	"private": true,
+	"engines": {
+		"node": ">=12.19.0"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.11.5",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.8.0",
+		"eslint": "^7.21.0",
+		"eslint-plugin-jsx-a11y": "^6.4.1",
+		"eslint-plugin-react": "^7.22.0",
+		"eslint-plugin-react-hooks": "^4.2.0",
+		"json-server": "^0.16.2",
+		"prettier": "^2.2.1",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-scripts": "4.0.0"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"prettier": "prettier --write src/ public/",
+		"lint": "eslint --cache --ext js,jsx src/",
+		"lint:strict": "eslint --cache --ext js,jsx --config .eslintrc-react-all.json src/",
+		"lint:fix": "eslint --cache --ext js,jsx --fix src/",
+		"test": "react-scripts test",
+		"coverage": "CI=true react-scripts test --coverage",
+		"postcoverage": "cp ../perljs/scripts/coverage/*.css coverage/",
+		"coverage-view": "chromium-browser coverage/index.html",
+		"server": "json-server --watch db.json -p 3001"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/*.js",
+			"!src/App.js",
+			"!src/utils/api.js",
+			"!src/index.js"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 87,
+				"functions": 75,
+				"lines": 81,
+				"statements": 81
+			}
+		},
+		"coverageReporters": [
+			"html",
+			"text"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }

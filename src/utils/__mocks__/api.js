@@ -1,44 +1,44 @@
-import backend from "../../../db.json";
+import backend from '../../../db.json'
 
 const mockData = {
-  // AutoComplete search data...
-  test: backend.search,
+	// AutoComplete search data...
+	test: backend.search,
 
-  // ProductDetail data...
-  test1: {
-    id: "test1",
-    title: "TEST1 Product Title",
-  },
-  test2: {
-    id: "test2",
-    image: "data:IMAGE",
-    title: "TEST2 Product Title",
-    description: "TEST2 Product Description",
-    price: "12.4",
-  },
-  test3: {
-    id: "test3",
-    title: "TEST3 Product Title",
-    price: "1234332",
-  },
-};
+	// ProductDetail data...
+	test1: {
+		id: 'test1',
+		title: 'TEST1 Product Title',
+	},
+	test2: {
+		id: 'test2',
+		image: 'data:IMAGE',
+		title: 'TEST2 Product Title',
+		description: 'TEST2 Product Description',
+		price: '12.4',
+	},
+	test3: {
+		id: 'test3',
+		title: 'TEST3 Product Title',
+		price: '1234332',
+	},
+}
 // Populate mock ProductDetail data from db.json
 backend.products.forEach((product) => {
-  mockData[product.id] = product;
-});
+	mockData[product.id] = product
+})
 
 function wrapApi(key) {
-  if (/error/.test(key)) {
-    // Some server error which invokes the catch blcok
-    return Promise.reject(key);
-  }
-  return Promise.resolve(mockData[key] || {});
+	if (/error/.test(key)) {
+		// Some server error which invokes the catch blcok
+		return Promise.reject(key)
+	}
+	return Promise.resolve(mockData[key] || {})
 }
 
 export const fetchSuggestions = (searchTerm) => {
-  return wrapApi(searchTerm);
-};
+	return wrapApi(searchTerm)
+}
 
 export const fetchProductDetail = (id) => {
-  return wrapApi(id);
-};
+	return wrapApi(id)
+}
