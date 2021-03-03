@@ -3,5 +3,5 @@ coverage
 .git
 .eslintcache
 .stylelintcache
-# emacs lock files should be ignored by eslint
+# emacs lock files should be ignored by stylelint
 .#*.*

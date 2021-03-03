@@ -1,3 +1,7 @@
+node_modules
+coverage
+.git
+.eslintcache
+.stylelintcache
 # emacs lock files should be ignored by prettier
-.#*.js
-.#*.jsx
+.#*.*

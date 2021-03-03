@@ -17,6 +17,7 @@
 		max-width: 70rem;
 		padding: 10rem 0;
 	}
+
 	.App.showing-details {
 		flex-direction: row;
 	}

@@ -4,6 +4,7 @@
 	width: 22rem;
 	margin: auto;
 }
+
 .search-container.showing-details {
 	margin-top: 2rem;
 }
@@ -14,6 +15,7 @@
 		width: 30rem;
 		margin-top: 0;
 	}
+
 	.search-container.showing-details {
 		margin-left: 0;
 		margin-top: 0;
