@@ -13,6 +13,8 @@ import './Autocomplete.css'
 
 const displayName = 'Autocomplete'
 
+const EMPTY = []; // prevent unnecessary hook state re-renders
+
 let instance = 0;
 const mounted = {};
 
@@ -47,7 +49,7 @@ function Autocomplete({ onClickProduct }) {
 	const [productId, setProductId] = useState(null)
 	const [searchError, setSearchError] = useState({})
 	const [searchTerm, setSearchTerm] = useState('')
-	const [suggestions, setSuggestions] = useState([])
+	const [suggestions, setSuggestions] = useState(EMPTY)
 
   // Track mounted state to prevent async state change afterward.
   useEffect(() => {
@@ -117,7 +119,7 @@ function Autocomplete({ onClickProduct }) {
 			lookup(term)
 		} else {
 			cancelApi()
-			setSuggestions([])
+			setSuggestions(EMPTY)
 		}
 	}, [
 		lookup,
@@ -136,7 +138,7 @@ function Autocomplete({ onClickProduct }) {
 				event && event.target && event.target.getAttribute('data-id')
 			cancelApi()
 			setSearchTerm('')
-			setSuggestions([])
+			setSuggestions(EMPTY)
 			setProductId(id)
 			id && onClickProduct && onClickProduct(id)
 		},
