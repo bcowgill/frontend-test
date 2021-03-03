@@ -22,6 +22,8 @@ const image = memoize((image) => {
 	return `https://picsum.photos/${width}/${height}`
 });
 
+const NOTHING = {} // prevent unnecessary hook state re-renders
+
 // toLocaleString works in browser, but not under jest...
 function formatMoney(
 	amount,
@@ -58,9 +60,14 @@ function formatMoney(
 	}
 }
 
-function ProductDetail({ productId }) {
-	const [errorInfo, setError] = useState({})
+function ProductDetail(props) {
+	const { productId } = props
+	const [errorInfo, setError] = useState(NOTHING)
 	const [productInfo, setProductInfo] = useState(null)
+
+	// for easier debugging, gather state together
+	// eslint-disable-next-line no-unused-vars
+	const state = { productInfo, errorInfo }
 
 	useEffect(() => {
 		if (!productId) {
@@ -95,6 +102,8 @@ function ProductDetail({ productId }) {
 			productInfo && productInfo.price
 				? formatMoney(productInfo.price)
 				: ''
+
+		//console.warn(`${displayName}.render`, props, state)
 		return (
 			<div className="detail-container" data-testid={displayName}>
 				{productInfo && productInfo.id && (

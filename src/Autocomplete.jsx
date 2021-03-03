@@ -13,7 +13,8 @@ import './Autocomplete.css'
 
 const displayName = 'Autocomplete'
 
-const EMPTY = []; // prevent unnecessary hook state re-renders
+const EMPTY = [] // prevent unnecessary hook state re-renders
+const NOTHING = {}
 
 let instance = 0;
 const mounted = {};
@@ -43,7 +44,8 @@ Suggest.defaultProps = {
 
 const THROTTLE = 300
 
-function Autocomplete({ onClickProduct }) {
+function Autocomplete(props) {
+	const { onClickProduct } = props
 	const lastLookupRef = useRef(null)
 	const [ident] = useState(instance++)
 	const [productId, setProductId] = useState(null)
@@ -58,6 +60,16 @@ function Autocomplete({ onClickProduct }) {
       delete mounted[ident]
     }
   })
+
+	// for easier debugging, gather up all the state...
+	// eslint-disable-next-line no-unused-vars
+	const state = {
+		lastLookupRef,
+		productId,
+		searchTerm,
+		searchError,
+		suggestions,
+	}
 
 	const handleChange = useCallback(
 		(event) => {
@@ -109,7 +121,7 @@ function Autocomplete({ onClickProduct }) {
 	useEffect(() => {
 		const term = searchTerm.trim()
 		if (searchError.message) {
-			setSearchError({})
+			setSearchError(NOTHING)
 		}
 		if (term.length) {
 			if (productId) {
@@ -167,6 +179,7 @@ function Autocomplete({ onClickProduct }) {
 	}
 
 	//console.warn(`${displayName}.render`, renders, productId);
+	//console.warn(`${displayName}.render`, props, state)
 	const details = productId ? 'showing-details' : ''
 	// ++renders;
 	return (

@@ -14,15 +14,15 @@ if (!DISABLE && /^(dev|development|test)$/.test(process.env.NODE_ENV)) {
 		//  // ...other options
 		// }
 		trackAllPureComponents: true,
-	include: [
-		/./, // turning this on can freeze up if there are huge lists which render needlessly
-		// /MyComponentToTrack/,
-		// RegExp to match display name of components to track
-	],
-	exclude: [
-		// /ComponentToIgnore/,
-	],
-	// trackHooks: false,
-	// logownerReasons: false,
-	});
+		include: [
+			/./, // turning this on can freeze up if there are huge lists which render needlessly
+			// /MyComponentToTrack/,
+			// RegExp to match display name of components to track
+		],
+		exclude: [
+			// /ComponentToIgnore/,
+		],
+		// trackHooks: false,
+		// logownerReasons: false,
+	})
 }
