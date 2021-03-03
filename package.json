@@ -17,17 +17,19 @@
 		"prettier": "^2.2.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-scripts": "4.0.0"
+		"react-scripts": "4.0.0",
+		"weak-napi": "^2.0.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"prettier": "prettier --write src/ public/",
+		"prettier": "prettier --write *.json .*.json src/ public/",
 		"lint": "eslint --cache --ext js,jsx src/",
 		"lint:strict": "eslint --cache --ext js,jsx --config .eslintrc-react-all.json src/",
 		"lint:fix": "eslint --cache --ext js,jsx --fix src/",
-		"test": "react-scripts test",
-		"coverage": "CI=true react-scripts test --coverage",
-		"postcoverage": "cp ../perljs/scripts/coverage/*.css coverage/",
+		"test": "react-scripts test --detectLeaks --notify",
+		"cover": "CI=true react-scripts test --coverage",
+		"coverage": "yarn run cover",
+		"postcover": "cp ../perljs/scripts/coverage/*.css coverage/",
 		"coverage-view": "chromium-browser coverage/index.html",
 		"server": "json-server --watch db.json -p 3001"
 	},
@@ -37,16 +39,17 @@
 	"jest": {
 		"collectCoverageFrom": [
 			"src/**/*.js",
-			"!src/App.js",
+			"src/**/*.jsx",
+			"!src/App.jsx",
 			"!src/utils/api.js",
-			"!src/index.js"
+			"!src/index.jsx"
 		],
 		"coverageThreshold": {
 			"global": {
-				"branches": 87,
-				"functions": 75,
-				"lines": 81,
-				"statements": 81
+				"statements": 95,
+				"branches": 90,
+				"functions": 100,
+				"lines": 95
 			}
 		},
 		"coverageReporters": [
