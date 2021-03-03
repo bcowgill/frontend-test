@@ -1,0 +1,3 @@
+# emacs lock files should be ignored by eslint
+.#*.js
+.#*.jsx
