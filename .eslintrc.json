@@ -20,6 +20,7 @@
 	},
 	"plugins": ["react"],
 	"rules": {
+		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
 		"react/jsx-indent": [
 			"error",
 			"tab",

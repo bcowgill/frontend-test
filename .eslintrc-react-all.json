@@ -19,6 +19,7 @@
 	},
 	"plugins": ["react"],
 	"rules": {
+		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
 		"react/boolean-prop-naming": "error",
 		"react/button-has-type": "error",
 		"react/default-props-match-prop-types": "error",
