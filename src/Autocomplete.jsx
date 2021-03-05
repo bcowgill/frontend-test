@@ -1,9 +1,4 @@
-import React, {
-	useRef,
-	useState,
-	useEffect,
-	useCallback
-} from "react";
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import noop from 'lodash/noop'
 import PropTypes from 'prop-types'
 import { fetchSuggestions } from './utils/api'
@@ -80,8 +75,8 @@ function Autocomplete(props) {
 
 	const cancelApi = useCallback(() => {
 		if (lastLookupRef.current) {
-			clearTimeout(lastLookupRef.current);
-			lastLookupRef.current = null;
+			clearTimeout(lastLookupRef.current)
+			lastLookupRef.current = null
 		}
 	}, [lastLookupRef])
 

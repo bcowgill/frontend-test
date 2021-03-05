@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { fetchProductDetail } from './utils/api'
 import './ProductDetail.css'
 
-const displayName = "ProductDetail";
-const BLOCKED = false;
+const displayName = 'ProductDetail'
+const BLOCKED = false
 
 /* wipro site blocking... make a random image */
 const image = memoize((image) => {
@@ -20,7 +20,7 @@ const image = memoize((image) => {
 	const width = min + Math.round(range * Math.random()) * step
 	const height = min + Math.round(range * Math.random()) * step
 	return `https://picsum.photos/${width}/${height}`
-});
+})
 
 const NOTHING = {} // prevent unnecessary hook state re-renders
 
