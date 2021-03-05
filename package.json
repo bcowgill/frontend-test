@@ -39,6 +39,7 @@
 		"stylelint": "stylelint --cache --report-needless-disables --report-invalid-scope-disables --report-descriptionless-disables --formatter verbose src/**/*.css",
 		"stylelint:fix": "stylelint --cache src/**/*.css --fix",
 		"eslint": "eslint --cache --ext js,jsx src/",
+		"eslint:context": "eslint --cache --ext js,jsx src/ --format codeframe",
 		"eslint:strict": "eslint --cache --ext js,jsx --config .eslintrc-react-all.json src/",
 		"eslint:fix": "eslint --cache --ext js,jsx src/ --fix",
 		"prelint": "yarn run prettier; yarn run htmllint; yarn run stylelint",
