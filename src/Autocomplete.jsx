@@ -11,8 +11,8 @@ const displayName = 'Autocomplete'
 const EMPTY = [] // prevent unnecessary hook state re-renders
 const NOTHING = {}
 
-let instance = 0;
-const mounted = {};
+let instance = 0
+const mounted = {}
 
 const Suggest = React.memo(({ id, title, onClick }) => {
 	return (
@@ -48,13 +48,13 @@ function Autocomplete(props) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [suggestions, setSuggestions] = useState(EMPTY)
 
-  // Track mounted state to prevent async state change afterward.
-  useEffect(() => {
-    mounted[ident] = `${displayName}${ident}`
-    return () => {
-      delete mounted[ident]
-    }
-  })
+	// Track mounted state to prevent async state change afterward.
+	useEffect(() => {
+		mounted[ident] = `${displayName}${ident}`
+		return () => {
+			delete mounted[ident]
+		}
+	})
 
 	// for easier debugging, gather up all the state...
 	// eslint-disable-next-line no-unused-vars
@@ -84,9 +84,9 @@ function Autocomplete(props) {
 		(term) => {
 			cancelApi()
 			lastLookupRef.current = setTimeout(() => {
-        if (!mounted[ident]) {
-          return
-        }
+				if (!mounted[ident]) {
+					return
+				}
 				lastLookupRef.current = null
 				fetchSuggestions(term)
 					.then((suggestions) => {
@@ -94,12 +94,12 @@ function Autocomplete(props) {
 						if (suggestions.length > 10) {
 							suggestions.length = 10
 						}
-            if (mounted[ident]) {
+						if (mounted[ident]) {
 							setSuggestions(suggestions)
-            }
+						}
 					})
 					.catch((error) => {
-            if (mounted[ident]) {
+						if (mounted[ident]) {
 							setSearchError({
 								error,
 								term,
