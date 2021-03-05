@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
+import memoize from 'lodash/memoize'
 import { fetchProductDetail } from "./utils/api";
 import "./ProductDetail.css";
 
 const displayName = "ProductDetail";
+
+/* wipro site blocking... make a random image */
+const image = memoize((image) => {
+  if (!image) {
+    return null
+  }
+  const range = 4
+  const min = 400
+  const step = 100
+  const width = min + Math.round(range * Math.random()) * step
+  const height = min + Math.round(range * Math.random()) * step
+  return `https://picsum.photos/${width}/${height}`
+})
 
 // toLocaleString works in browser, but not under jest...
 function formatMoney(
@@ -82,7 +96,7 @@ function ProductDetail({ productId }) {
             <div data-testid={`${displayName}-image`} className="row">
               <img
                 alt={productInfo.title}
-                src={productInfo.image}
+                src={image(productInfo.image)}
                 className="product-image"
               />
             </div>
@@ -110,6 +124,7 @@ function ProductDetail({ productId }) {
               <div
                 aria-labelledby={`${displayName}-description-${productInfo.id}`}
                 className="row-body subtle ellipsis"
+                title={productInfo.description}
               >
                 {productInfo.description}
               </div>
