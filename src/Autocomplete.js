@@ -12,6 +12,9 @@ import "./Autocomplete.css";
 
 const displayName = "Autocomplete";
 
+let instance = 0;
+const mounted = {};
+
 const Suggest = React.memo(({ id, title, onClick }) => {
   return (
     <button
@@ -35,10 +38,19 @@ const THROTTLE = 300;
 
 function Autocomplete({ onClickProduct }) {
   const lastLookupRef = useRef(null)
+  const [ident] = useState(instance++)
   const [productId, setProductId] = useState(null)
   const [searchError, setSearchError] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  // Track mounted state to prevent async state change afterward.
+  useEffect(() => {
+    mounted[ident] = `${displayName}${ident}`
+    return () => {
+      delete mounted[ident]
+    }
+  })
 
   const cancelApi = useCallback(() => {
     if (lastLookupRef.current) {
@@ -51,6 +63,9 @@ function Autocomplete({ onClickProduct }) {
     (term) => {
       cancelApi();
       lastLookupRef.current = setTimeout(() => {
+        if (!mounted[ident]) {
+          return
+        }
         lastLookupRef.current = null;
         fetchSuggestions(term)
           .then((suggestions) => {
@@ -58,18 +73,22 @@ function Autocomplete({ onClickProduct }) {
             if (suggestions.length > 10) {
               suggestions.length = 10;
             }
-            setSuggestions(suggestions);
+            if (mounted[ident]) {
+              setSuggestions(suggestions);
+            }
           })
           .catch((error) => {
-            setSearchError({
-              error,
-              term,
-              message: "error trying to search, please try later.",
-            });
+            if (mounted[ident]) {
+              setSearchError({
+                error,
+                term,
+                message: "error trying to search, please try later.",
+              });
+            }
           });
       }, THROTTLE);
     },
-    [setSuggestions, setSearchError, cancelApi]
+    [setSuggestions, setSearchError, cancelApi, ident]
   );
 
   useEffect(() => {
