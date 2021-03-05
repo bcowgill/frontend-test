@@ -135,6 +135,7 @@ function Autocomplete({ onClickProduct }) {
       />*/}
       <input
         type="text"
+        title="Don’t hesitate, search now!"
         value={searchTerm}
         className="search-box"
         placeholder="Search for a product"

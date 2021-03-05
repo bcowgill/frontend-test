@@ -89,18 +89,27 @@ function ProductDetail({ productId }) {
 
     const price =
       productInfo && productInfo.price ? formatMoney(productInfo.price) : "";
+    const titleTooltip = productInfo && `At ${price} the ${productInfo.title} is practically a steal, after all, it features: ${productInfo.description}`
     return (
-      <div data-testid={displayName} className="detail-container">
+      <div
+        title={titleTooltip}
+        data-testid={displayName}
+        className="detail-container">
         {productInfo && productInfo.id && (
           <>
-            <div data-testid={`${displayName}-image`} className="row">
+            <div
+              data-testid={`${displayName}-image`}
+              className="row">
               <img
                 alt={productInfo.title}
                 src={image(productInfo.image)}
                 className="product-image"
               />
             </div>
-            <div data-testid={`${displayName}-title`} className="row">
+            <div
+              title={productInfo.title}
+              data-testid={`${displayName}-title`}
+              className="row">
               <div
                 id={`${displayName}-title-${productInfo.id}`}
                 className="row-title hidden"
@@ -114,7 +123,10 @@ function ProductDetail({ productId }) {
                 {productInfo.title}
               </div>
             </div>
-            <div data-testid={`${displayName}-description`} className="row">
+            <div
+              title={productInfo.description}
+              data-testid={`${displayName}-description`}
+              className="row">
               <div
                 id={`${displayName}-description-${productInfo.id}`}
                 className="row-title hidden"
@@ -124,12 +136,14 @@ function ProductDetail({ productId }) {
               <div
                 aria-labelledby={`${displayName}-description-${productInfo.id}`}
                 className="row-body subtle ellipsis"
-                title={productInfo.description}
               >
                 {productInfo.description}
               </div>
             </div>
-            <div data-testid={`${displayName}-price`} className="row">
+            <div
+              title={`Yours for the low, low price of ${price} order now, we have operators standing by!`}
+              data-testid={`${displayName}-price`}
+              className="row">
               <div
                 id={`${displayName}-price-${productInfo.id}`}
                 className="row-title hidden"
