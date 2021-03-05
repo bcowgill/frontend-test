@@ -105,8 +105,7 @@ describe(displayName, () => {
       }
     });
 
-    expect(clickSpy).toHaveBeenCalledTimes(1);
-    expect(clickSpy).toHaveBeenCalledWith(null);
+    expect(clickSpy).toHaveBeenCalledTimes(0);
 
     expect(suggestions).toHaveLength(10);
     const select = screen.getByText(
@@ -121,8 +120,8 @@ describe(displayName, () => {
       }
     });
 
-    expect(clickSpy).toHaveBeenCalledTimes(2);
-    expect(clickSpy.mock.calls[1]).toEqual(["10"]);
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledWith("10");
 
     userEvent.clear(input);
     userEvent.paste(input, "test");
@@ -133,7 +132,7 @@ describe(displayName, () => {
       }
     });
 
-    expect(clickSpy).toHaveBeenCalledTimes(3);
-    expect(clickSpy.mock.calls[2][0]).toBe(null);
+    expect(clickSpy).toHaveBeenCalledTimes(2);
+    expect(clickSpy.mock.calls[1][0]).toBe(null);
   });
 });

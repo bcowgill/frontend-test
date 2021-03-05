@@ -1,5 +1,10 @@
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback
+} from "react";
 import PropTypes from "prop-types";
-import React, { useEffect, useState, useCallback } from "react";
 import { fetchSuggestions } from "./utils/api";
 import "./Autocomplete.css";
 
@@ -28,26 +33,25 @@ Suggest.propTypes = {
 
 const THROTTLE = 300;
 
-// TODO better to use a non-state variable useRef for this if more than one in the app...
-let productId = null;
-let lastLookup = null;
-function cancelApi() {
-  if (lastLookup) {
-    clearTimeout(lastLookup);
-    lastLookup = null;
-  }
-}
-
 function Autocomplete({ onClickProduct }) {
+  const lastLookupRef = useRef(null)
+  const [productId, setProductId] = useState(null)
   const [searchError, setSearchError] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
+  const cancelApi = useCallback(() => {
+    if (lastLookupRef.current) {
+      clearTimeout(lastLookupRef.current);
+      lastLookupRef.current = null;
+    }
+  }, [lastLookupRef])
+
   const lookup = useCallback(
     (term) => {
       cancelApi();
-      lastLookup = setTimeout(() => {
-        lastLookup = null;
+      lastLookupRef.current = setTimeout(() => {
+        lastLookupRef.current = null;
         fetchSuggestions(term)
           .then((suggestions) => {
             // throw new Error("simulate an error");
@@ -65,7 +69,7 @@ function Autocomplete({ onClickProduct }) {
           });
       }, THROTTLE);
     },
-    [setSuggestions, setSearchError]
+    [setSuggestions, setSearchError, cancelApi]
   );
 
   useEffect(() => {
@@ -75,7 +79,7 @@ function Autocomplete({ onClickProduct }) {
     }
     if (term.length) {
       if (productId) {
-        productId = null;
+        setProductId(null);
         onClickProduct && onClickProduct(null);
       }
       lookup(term);
@@ -84,11 +88,13 @@ function Autocomplete({ onClickProduct }) {
       setSuggestions([]);
     }
   }, [
+    lookup,
+    cancelApi,
+    productId,
     searchTerm,
     searchError,
     setSearchError,
     setSuggestions,
-    lookup,
     onClickProduct,
   ]);
 
@@ -98,15 +104,17 @@ function Autocomplete({ onClickProduct }) {
       cancelApi();
       setSearchTerm("");
       setSuggestions([]);
-      productId = id;
+      setProductId(id);
       id && onClickProduct && onClickProduct(id);
     },
-    [onClickProduct]
+    [onClickProduct, cancelApi
+    ]
   );
 
   function renderSuggestions() {
     return (
       <div
+        title="Choose now, while supplies last!"
         className="search-suggestion-list"
         data-testid={`${displayName}-suggestion-list`}
       >

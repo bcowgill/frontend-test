@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import memoize from 'lodash/memoize'
+import memoize from "lodash/memoize";
 import { fetchProductDetail } from "./utils/api";
 import "./ProductDetail.css";
 
@@ -8,15 +8,15 @@ const displayName = "ProductDetail";
 /* wipro site blocking... make a random image */
 const image = memoize((image) => {
   if (!image) {
-    return null
+    return null;
   }
-  const range = 4
-  const min = 400
-  const step = 100
-  const width = min + Math.round(range * Math.random()) * step
-  const height = min + Math.round(range * Math.random()) * step
-  return `https://picsum.photos/${width}/${height}`
-})
+  const range = 4;
+  const min = 400;
+  const step = 100;
+  const width = min + Math.round(range * Math.random()) * step;
+  const height = min + Math.round(range * Math.random()) * step;
+  return `https://picsum.photos/${width}/${height}`;
+});
 
 // toLocaleString works in browser, but not under jest...
 function formatMoney(
@@ -89,17 +89,18 @@ function ProductDetail({ productId }) {
 
     const price =
       productInfo && productInfo.price ? formatMoney(productInfo.price) : "";
-    const titleTooltip = productInfo && `At ${price} the ${productInfo.title} is practically a steal, after all, it features: ${productInfo.description}`
+    const titleTooltip =
+      productInfo &&
+      `At ${price} the ${productInfo.title} is practically a steal, after all, it features: ${productInfo.description}`;
     return (
       <div
         title={titleTooltip}
         data-testid={displayName}
-        className="detail-container">
+        className="detail-container"
+      >
         {productInfo && productInfo.id && (
           <>
-            <div
-              data-testid={`${displayName}-image`}
-              className="row">
+            <div data-testid={`${displayName}-image`} className="row">
               <img
                 alt={productInfo.title}
                 src={image(productInfo.image)}
@@ -109,7 +110,8 @@ function ProductDetail({ productId }) {
             <div
               title={productInfo.title}
               data-testid={`${displayName}-title`}
-              className="row">
+              className="row"
+            >
               <div
                 id={`${displayName}-title-${productInfo.id}`}
                 className="row-title hidden"
@@ -126,7 +128,8 @@ function ProductDetail({ productId }) {
             <div
               title={productInfo.description}
               data-testid={`${displayName}-description`}
-              className="row">
+              className="row"
+            >
               <div
                 id={`${displayName}-description-${productInfo.id}`}
                 className="row-title hidden"
@@ -143,7 +146,8 @@ function ProductDetail({ productId }) {
             <div
               title={`Yours for the low, low price of ${price} order now, we have operators standing by!`}
               data-testid={`${displayName}-price`}
-              className="row">
+              className="row"
+            >
               <div
                 id={`${displayName}-price-${productInfo.id}`}
                 className="row-title hidden"
